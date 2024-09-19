@@ -15,9 +15,10 @@ public class NewTask {
 
     }
 
-    public static ArrayList<String> getData(String input) throws Exception {
+    public static ArrayList<String> getString(String input) throws Exception {
         ArrayList<Integer> qMarks = new ArrayList<Integer>();
         ArrayList<String> data = new ArrayList<String>();
+        int digit;
         for (int i = 0; i < input.length(); i++) {
             if (input.charAt(i) == '"') {
                 qMarks.add(i);
@@ -25,9 +26,6 @@ public class NewTask {
         }
         for (int i = 0; i < qMarks.size() - 1; i += 2) {
             data.add(input.substring(qMarks.get(i) + 1, qMarks.get(i + 1)));
-        }
-        if (data.size() < 2){
-            throw new Exception("Некорректный ввод");
         }
         for (int i = 0; i < data.size(); i++) {
             if (data.get(i).length() > 10) {
@@ -37,8 +35,28 @@ public class NewTask {
         return data;
     }
 
+    public static int getDigit(String input){
+        int beginIndex = 0;
+        int digit = 0;
+        for (int i = 0; i < input.length(); i++) {
+            if (input.charAt(i) == '*' && input.charAt(i) == '/'){
+                beginIndex = i;
+            }
+        }
+        for (int i = beginIndex + 1; i < input.length(); i++) {
+            if (Character.isDigit(input.charAt(i))){
+                if (input.charAt(i) == '1' && input.charAt(i + 1) == '0'){
+                    digit = 10;
+                }
+                digit = Character.getNumericValue(input.charAt(i));
+            }
+        }
+        return digit;
+    }
+
         public static String doMathAction(String input) throws Exception {
-            ArrayList<String> data = getData(input);
+            ArrayList<String> data = getString(input);
+            int digit = getDigit(input);
             String result = "";
             for (int i = 0; i < input.length(); i++) {
                 switch (input.charAt(i)) {
@@ -49,10 +67,10 @@ public class NewTask {
                         result = substract(data);
                         break;
                     case '*':
-                        result = multiply(data);
+                        result = multiply(data, digit);
                         break;
                     case '/':
-                        result = divide(data);
+                        result = divide(data, digit);
                 }
             }
 
@@ -83,25 +101,19 @@ public class NewTask {
         return result;
     }
 
-    public static String multiply(ArrayList<String> data){
+    public static String multiply(ArrayList<String> data, int digit){
         String result = "";
-        for (int i = 0; i < data.size() - 1; i++) {
-            int multiplier = Integer.parseInt(data.get(i + 1));
-            for (int j = 0; j < multiplier; j++) {
-                result += data.get(i);
-            }
+        for (int j = 0; j < digit; j++) {
+            result += data.get(0);
         }
         return result;
     }
 
-    public static String divide(ArrayList<String> data){
+    public static String divide(ArrayList<String> data, int digit){
         String strResult = "";
-        for (int i = 0; i < data.size() - 1; i++) {
-            int divisible = data.get(i).length();
-            int divider = Integer.parseInt(data.get(i + 1));
-            int endIndex = divisible / divider;
-            strResult = data.get(i).substring(0, endIndex);
-        }
+        int divisible = data.get(0).length();
+        int endIndex = divisible / digit;
+        strResult = data.get(0).substring(0, endIndex);
         return strResult;
     }
 }
