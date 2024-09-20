@@ -45,8 +45,11 @@ public class NewTask {
         }
         for (int i = beginIndex + 1; i < input.length(); i++) {
             if (Character.isDigit(input.charAt(i))){
-                if (input.charAt(i) == '1' && input.charAt(i + 1) == '0'){
+                if (input.charAt(i) == '0' && input.charAt(i - 1) == '1'){
                     digit = 10;
+                }
+                if (input.charAt(i) == '0'){
+                    break;
                 }
                 digit = Character.getNumericValue(input.charAt(i));
             }
