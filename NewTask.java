@@ -77,8 +77,8 @@ public class NewTask {
                 }
             }
 
-            if (result.length() > 40) {
-                String cutResult = result.substring(0, 41) + "...";
+            if (result.length() >= 40) {
+                String cutResult = result.substring(0, 40) + "...";
                 result = cutResult;
             }
             return result;
