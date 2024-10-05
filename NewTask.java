@@ -111,6 +111,9 @@ public class NewTask {
     }
 
     public static String divide(ArrayList<String> data, int digit) throws Exception {
+        if(digit == 0){
+            throw new Exception("Деление на ноль");
+        }
         String strResult = "";
         int divisible = data.get(0).length();
         int endIndex = divisible / digit;
