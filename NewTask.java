@@ -35,7 +35,7 @@ public class NewTask {
         return data;
     }
 
-    public static int getDigit(String input){
+    public static int getDigit(String input) throws Exception {
         int beginIndex = 0;
         int digit = 0;
         for (int i = 0; i < input.length(); i++) {
@@ -45,10 +45,8 @@ public class NewTask {
         }
         for (int i = beginIndex + 1; i < input.length(); i++) {
             if (Character.isDigit(input.charAt(i))){
-                if (input.charAt(i) == '0' && input.charAt(i - 1) == '1'){
+                if (input.charAt(i) == '1' && i < input.length() - 1 && input.charAt(i + 1) == '0'){
                     digit = 10;
-                }
-                if (input.charAt(i) == '0'){
                     break;
                 }
                 digit = Character.getNumericValue(input.charAt(i));
@@ -112,7 +110,7 @@ public class NewTask {
         return result;
     }
 
-    public static String divide(ArrayList<String> data, int digit){
+    public static String divide(ArrayList<String> data, int digit) throws Exception {
         String strResult = "";
         int divisible = data.get(0).length();
         int endIndex = divisible / digit;
